@@ -1,5 +1,6 @@
 # Requests may need to be installed for this script to work
 import requests
+import re
 import config
 
 # Here we pass our client id and secret token
@@ -26,7 +27,7 @@ headers = {**headers, **{'Authorization': f"bearer {TOKEN}"}}
 # While the token is valid (~2 hours) we just add headers=headers to our requests
 requests.get('https://oauth.reddit.com/api/v1/me', headers=headers)
 
-# Pull results
+# Pull results from desired subreddits
 for subreddit in config.subreddits:
     res = requests.get("https://oauth.reddit.com/r/" + subreddit + "/hot",
                     headers=headers,
@@ -36,11 +37,9 @@ for subreddit in config.subreddits:
         print(post['data']['title'])
         print(post['data']['permalink'])
 
-
+# Working on a regex to filter out relevant content...
 
 # ------------------------------------
-#index = 0
-
 #for post in res.json()['data']['children']:
 #    print(post['data']['subreddit'])
 #    print(post['data']['title'])
@@ -50,5 +49,3 @@ for subreddit in config.subreddits:
 #    print(post['data']['ups'])
 #    print(post['data']['downs'])
 #    print(post['data']['score'])
-#    index += 1
-#    print(index)

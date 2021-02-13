@@ -26,7 +26,15 @@ headers = {**headers, **{'Authorization': f"bearer {TOKEN}"}}
 requests.get('https://oauth.reddit.com/api/v1/me', headers=headers)
 
 # Pull results
-res = requests.get("https://oauth.reddit.com/r/python/hot",
-                   headers=headers)
+res = requests.get("https://oauth.reddit.com/r/ottawa/hot",
+                   headers=headers,
+                   params={'limit': '100'})
 
-print(res.json())  # let's see what we get
+for post in res.json()['data']['children']:
+    print(post['data']['subreddit'])
+    print(post['data']['title'])
+    print(post['data']['selftext'])
+    print(post['data']['upvote_ratio'])
+    print(post['data']['ups'])
+    print(post['data']['downs'])
+    print(post['data']['score'])

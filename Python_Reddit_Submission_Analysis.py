@@ -1,5 +1,6 @@
-import config
+# Requests may need to be installed for this script to work
 import requests
+import config
 
 # Here we pass our client id and secret token
 auth = requests.auth.HTTPBasicAuth(config.client_id, config.secret_token)
@@ -26,15 +27,28 @@ headers = {**headers, **{'Authorization': f"bearer {TOKEN}"}}
 requests.get('https://oauth.reddit.com/api/v1/me', headers=headers)
 
 # Pull results
-res = requests.get("https://oauth.reddit.com/r/ottawa/hot",
-                   headers=headers,
-                   params={'limit': '100'})
+for subreddit in config.subreddits:
+    res = requests.get("https://oauth.reddit.com/r/" + subreddit + "/hot",
+                    headers=headers,
+                    params={'limit': '5'})
+    for post in res.json()['data']['children']:
+        print(post['data']['subreddit'])
+        print(post['data']['title'])
+        print(post['data']['permalink'])
 
-for post in res.json()['data']['children']:
-    print(post['data']['subreddit'])
-    print(post['data']['title'])
-    print(post['data']['selftext'])
-    print(post['data']['upvote_ratio'])
-    print(post['data']['ups'])
-    print(post['data']['downs'])
-    print(post['data']['score'])
+
+
+# ------------------------------------
+#index = 0
+
+#for post in res.json()['data']['children']:
+#    print(post['data']['subreddit'])
+#    print(post['data']['title'])
+#    print(post['data']['selftext'])
+#    print(post['data']['permalink'])
+#    print(post['data']['upvote_ratio'])
+#    print(post['data']['ups'])
+#    print(post['data']['downs'])
+#    print(post['data']['score'])
+#    index += 1
+#    print(index)

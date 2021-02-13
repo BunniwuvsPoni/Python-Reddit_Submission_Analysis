@@ -6,3 +6,4 @@ secret_token = "secret token"
 username = "username"
 password = "password"
 botname = "botname"
+subreddits = ["subreddit1","subreddit2"]

@@ -10,7 +10,7 @@ data = {'grant_type': 'password',
         'password': config.password}
 
 # Setup our header info, which gives reddit a brief description of our app
-headers = {'User-Agent': 'MyBot/0.0.1'}
+headers = {'User-Agent': config.botname + 'Bot/0.0.1'}
 
 # Send our request for an OAuth token
 res = requests.post('https://www.reddit.com/api/v1/access_token',
